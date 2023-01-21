@@ -10,8 +10,8 @@ wget \
 
 rm -rf /tmp/cookies.txt
 
-# https://drive.google.com/file/d/.../view?usp=sharing
-FILEID=""
+# https://drive.google.com/file/d/1ea1GNeGlkNWpwdlBPVBfufcfqgP-8laq/view?usp=sharing
+FILEID="1ea1GNeGlkNWpwdlBPVBfufcfqgP-8laq"
 FILENAME="cns_feat-2b.tar.gz"
 wget \
     --load-cookies /tmp/cookies.txt \
