@@ -1,0 +1,10 @@
+#+title: Info_mega_nz
+
+#+begin_src sh :eval query :tangle no
+wget https://mega.nz/linux/repo/xUbuntu_20.04/amd64/megacmd-xUbuntu_20.04_amd64.deb
+dpkg -x megacmd-xUbuntu_20.04_amd64.deb megacmd
+
+PATH="$PATH:$(pwd)/megacmd/usr/bin/"
+
+./megacmd/usr/bin/mega-get "https://mega.nz/file/..."
+#+end_src
