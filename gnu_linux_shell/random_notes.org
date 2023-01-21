@@ -1,0 +1,2310 @@
+#+title: Random_notes
+
+* Lab 001
+** Good sources
+- http://www.fizyka.umk.pl/~grochu/unix/materialy/unix.pdf
+- http://www.fizyka.umk.pl/~norbert/unix/u.pdf
+- http://www.fizyka.umk.pl/~jkob/so.pdf
+- https://app.datacamp.com/learn/courses/introduction-to-shell
+- https://app.datacamp.com/learn/courses/introduction-to-git
+- https://app.datacamp.com/learn/courses/intro-to-python-for-data-science
+** GNU/Linux
+- The name *“GNU”* is a recursive acronym for *“GNU's Not Unix.”*
+  GNU is an operating system that is free software—that is, it
+  respects users' freedom. The development of GNU made it possible
+  to use a computer without software that would trample your
+  freedom.
+(source: https://www.gnu.org/)
+** Free software
+A program is free software if the program's users have the four
+essential freedoms:
+- The freedom to run the program as you wish, for any purpose
+  (freedom 0).
+- The freedom to study how the program works, and change it so it
+  does your computing as you wish (freedom 1). Access to the source
+  code is a precondition for this.
+- The freedom to redistribute copies so you can help your neighbor
+  (freedom 2).
+- The freedom to distribute copies of your modified versions to
+  others (freedom 3). By doing this you can give the whole
+  community a chance to benefit from your changes. Access to the
+  source code is a precondition for this.
+(source: https://www.gnu.org/philosophy/free-sw.en.html)
+** Secure Shell (=ssh=)
+- =ssh= must be used
+  - for logging into a remote machines or
+  - for executing commands on a remote machines.
+- =telnet= is strictly forbidden!!!
+** SSH (examples)
+#+begin_src sh :eval query :tangle no
+ssh -o ServerAliveInterval=20 -o ServerAliveCountMax=1 username@ameryk.fizyka.umk.pl
+ssh -o ServerAliveInterval=20 -o ServerAliveCountMax=1 username@ferm.fizyka.umk.pl
+#+end_src
+* GIT (this repo)
+#+begin_src sh :eval query :tangle no
+git clone https://github.com/cogsys-io/cns-varia.git
+# OR using ssh
+git clone git@github.com:cogsys-io/cns-varia.git
+#+end_src
+** Who is who
+#+begin_src sh :eval query :tangle no
+whoami
+w
+id
+id -g
+id -u
+id -a
+groups $USER
+groups mallek
+who
+finger mallek
+last
+uptime
+uname -a
+
+history
+grep
+# <pipe> |
+cat /etc/passwd | grep tcsh
+exit
+#+end_src
+** Getting help and moving around
+#+begin_src sh :eval no :tangle no :comments no
+man -h
+apropos
+
+man 1 kill
+man 2 kill
+man -a kill
+
+whatis kill
+
+pwd --help
+man pwd
+
+ls --help
+
+ls -lahtr ~
+
+alias lll='ls -lAhtr'
+alias cp='rm -i'
+
+man less
+
+more
+less
+
+pwd
+ls
+cd
+cd ~
+cd ..
+cd .
+cd /
+
+ls -lah
+
+man 7 hier
+
+mkdir
+rmdir
+mkdir test
+cd !$
+
+mkdir -p tests/{test1,test2,test3}
+
+mkdir -p kat_1/kat_11/kat_111/{kat_1111,kat_1112,kat_1113}
+
+touch
+mv
+rm
+
+head
+tail
+wc
+sort < foo > bar &
+
+ln -s ~ ~/test
+#+end_src
+** Stream interaction
+| keystroke | Action                                              |
+|-----------+-----------------------------------------------------|
+| C-c       | SIGINT "interrupt", kill foreground process         |
+| C-z       | SIGTSTP "terminal stop", suspend foreground process |
+| C-d       | EOF, terminate input, or exit shell                 |
+| C-s       | Suspend output                                      |
+| C-q       | Resume output                                       |
+| C-q       | Discard output                                      |
+| C-q       | Clear screen                                        |
+** Speedup
+#+begin_example
+Ctr-p
+Ctr-n
+Alt-p
+Alt-n
+Alt-f
+Alt-b
+
+!35
+!p
+!$
+Ctr-r
+Ctr-s
+#+end_example
+** File ownership and permissions
+- Unix/Linux Permissions - a tutorial
+  http://www.grymoire.com/Unix/Permissions.html
+- Red Hat Enterprise Linux 4: Red Hat Enterprise Linux Step By Step Guide
+  Chapter 4. Shell Prompt Basics
+  4.11. Ownership and Permissions
+  https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Step_by_Step_Guide/s1-navigating-ownership.html
+- Linux Permissions Guide
+  https://support.plex.tv/hc/en-us/articles/200288596-Linux-Permissions-Guide
+- How to Prevent Other Users From Accessing Your Home Directory in Ubuntu
+  14.04
+  http://www.howtogeek.com/190084/how-to-prevent-other-users-from-accessing-your-home-directory-in-ubuntu-14.04/
+** Machine and environment
+#+begin_src sh :eval no :tangle no :comments no
+uname -a
+env
+echo $PATH
+which
+
+which zsh
+which bash
+which tcsh
+which man apropos
+which -a ls
+
+env
+env | less
+echo "OK"
+echo $PATH
+
+cat  /etc/centos-release /etc/centos-release #<pipe>
+
+hwinfo
+lsusb
+lsblk
+lspci
+df -h
+du -sh ~
+
+mount
+
+cat /etc/fstab
+
+cat /etc/passwd
+cat /etc/passwd
+
+# SPLIT PATH
+#+END_SRC
+** Network
+#+begin_src sh :eval no :tangle no :comments no
+ip a
+ifconfig
+route
+
+ping 8.8.8.8
+
+ping localhost
+
+hostname
+ping $(hostname)
+
+ping 158.75.5.43
+#+end_src
+** Processes
+#+begin_src sh :eval no :tangle no :comments no
+ps aux | grep ssh
+
+sleep 1100 &
+sleep 1200 &
+sleep 1300 &
+
+cd tg
+./counter4.sh 1 &
+./counter4.sh 2 &
+./counter4.sh 3 &
+./counter4.sh 4
+
+jobs
+fg %2
+bg %2
+kill %2
+kill -9 %1
+ps | grep sleep
+kill -SIGKILL $somePID
+
+top
+htop
+nvtop
+#+end_src
+* Lab 002
+** Git Clone
+#+begin_src sh :eval query :tangle no
+cd ~
+git clone https://github.com/cogsys-io/cns-varia.git
+cd cns-varia
+git pull
+#+end_src
+** Man
+#+begin_src sh :eval no :tangle no
+man wc
+man bc
+man cat
+man grep
+echo "2+3" | bc
+#+end_src
+** Sort, translate etc
+#+begin_src sh :eval no :tangle no
+sort
+echo -e "\n\nMango\nLemon\nKiwi\nOrange\nApple\nAvocado\nBanana\n"
+echo -e "\n\nMango\nLemon\nKiwi\nOrange\nApple\nAvocado\nBanana\n" > fruits
+cat !$
+sort fruits
+sort fruits > fruits_sorted
+cat fruits fruits
+cat fruits fruits >> FRUITS
+cat fruits fruits >> FRUITS
+cat fruits fruits  > FRUITS
+cat fruits_sorted | tr 'e' '3'
+cat fruits_sorted | tr 'e' '3' | tr 'o' '0'
+cat fruits_sorted | tr 'e' '3' | tr 'o' '0' > fruits_sorted_tr
+#+end_src
+** flip L-R flip U-D
+#+begin_src sh :eval no :tangle no
+man cat # SEE ALSO
+sort -r fruits
+sort -r fruits > fruits_sorted
+
+
+rev fruits_tr
+
+sort fruits > fruits_srtd
+cat fruits_srtd
+tac fruits_srtd
+
+cat > someText
+#+end_src
+** More stream manipulation
+#+begin_src sh :eval no :tangle no
+FRIUTS=$(cat fruits)
+echo $FRIUTS
+
+CITIES="\n\nTokyo\nNew York Metro\nSao Paulo\nSeoul/Incheon\nMexico City\nManila\nDelhi\nJakarta\n"
+
+
+echo -e $CITIES
+echo -e $CITIES | sort
+
+echo -e “tee can split a pipe” | tee >(tr ' ' '_') >(rev)
+
+echo $CITIES | tee >(tr ' ' '_' > cities_tr) >(rev > cities_rev) >(sort > cities_sorted) > cities
+
+head -n 3 /etc/passwd | tail -n 1
+
+awk 'NF' cities > cities_NF
+
+tail -3 cities_NF >> cities_NF
+cat cities_NF
+head -3 cities_NF >> cities_NF
+cat cities_NF
+# !!! order
+uniq cities_NF
+sort cities_NF | uniq > cities_NF_uniq
+
+
+cat cities_NF_uniq
+
+split -l 3 cities_NF_uniq y
+
+nl cities
+
+paste cities cities
+paste cities
+
+fNAME=`date +"%Y-%m-%d--%H-%M-%S"`.info
+history > $fNAME
+scp today.info username@ameryk.fizyka.umk.pl:/home/username/historia
+
+# sort cities_NF | uniq | tee >cities_NF_uniq_NEW > mail username@gmail.com
+#+end_src
+** Get only 3rd line and save it to file
+#+BEGIN_SRC sh :eval no :tangle no
+ls | head -3 | tail -1 > out.info
+#+END_SRC
+
+** Displays the 10 newest files in the current directory.
+#+BEGIN_SRC sh :eval no :tangle no
+ls -lt | head
+#+END_SRC
+
+** Displays a list of directories and how much space they consume, sorted from the largest to the smallest.
+#+BEGIN_SRC sh :eval no :tangle no
+du | sort -nr
+#+END_SRC
+
+** Displays the total number of files in the current working directory and all of its subdirectories.
+#+BEGIN_SRC sh :eval no :tangle no
+find . -type f -print | wc -l
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no
+dmesg | tail -n15 | head -n
+#+END_SRC
+
+
+#+BEGIN_SRC sh :eval no :tangle no
+sed 's/a/A/' cities
+#+END_SRC
+
+
+#+BEGIN_SRC sh :eval no :tangle no
+# du -h -a -c $(find . -name *.conf 2>&-)
+find [Cc]ities* -exec cat text3 {
+    find ~ -maxdepth 1 -iname "[Cc]ities*" -exec cat {} \;
+#+END_SRC
+
+
+#+BEGIN_SRC sh :eval no :tangle no
+wc -l < cities_NF | tee > cities_NF_count > $(tty)
+
+echo $(tty)
+/dev/pts/0
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no
+echo $PATH | tr : '\n' | awk  '{print "  " $0}'
+echo $PATH | tr ':' '\n'
+#+END_SRC
+
+** Output redirection
+#+BEGIN_SRC sh :eval no :tangle no
+ls x* z* p* 1>stdout.txt 2>stderr.txt
+
+ls x* z* &>output.txt
+cat output.txt
+
+ls x* z* >output.txt 2>&1
+cat output.txt
+
+# stderr does not go to output.t
+ls x* z* 2>&1 >output.txt
+cat output.txt
+
+#+END_SRC
+
+** Input redirection
+#+BEGIN_SRC sh :eval no :tangle no
+tr ' ' '\t'<text1
+#+END_SRC
+
+** Extras
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+wc
+
+cut -c2-3 friuts
+cut -c-3 friuts
+cut -c2- friuts
+
+cat fruits_sorted | tr 'e' '3'
+diff
+
+vim ~/.bashrc
+emacs ~/.zshrc
+
+wget https://www.gnu.org/software/emacs/images/emacs.png
+wget https://www.gnu.org/software/emacs/images/emacs.png
+
+git clone https://github.com/username/unix.git
+#+END_SRC
+
+
+
+
+* Puzzle
+#+begin_src sh :eval query :tangle no
+echo <(echo) <(echo)
+#+end_src
+* MESS GOES BELOW
+* Lab 002 head, tail and wc
+**** Recapitulation
+
+#+BEGIN_SRC sh :eval no :tangle no
+git clone https://github.com/username/unix.git
+#+END_SRC
+
+**** Exercise 3
+
+- How many processes are you currently running?
+
+  #+BEGIN_SRC sh :eval no :tangle no
+ps aux | grep "${USER}" | wc -l
+  #+END_SRC
+
+  #+BEGIN_SRC sh :eval no :tangle no
+ps aux | grep "^${USER}" | wc -l
+  #+END_SRC
+
+**** Changing the default shell
+
+#+BEGIN_SRC sh :eval no :tangle no
+chsh -s $(which zsh) username
+echo $0
+finger cybercraft | grep zsh
+ps -p $$ #
+#+END_SRC
+
+**** Virtual machines
+
+See [[*Virtual%20machines%20(%3Dlabul4c.fizyka.umk.pl%3D)][above]].
+
+**** Root
+
+#+BEGIN_SRC sh :eval no :tangle no
+su -
+sudo
+#+END_SRC
+
+*** Lab 003 redirection of data streams
+
+#+BEGIN_SRC sh :eval no :tangle no
+ls
+ls -lahtr
+
+alias ls
+unalias ls
+
+alias lll="ls -lah"
+alias llll="ls -lahtr"
+alias
+
+alias rm="rm -i"
+
+lll
+pwd
+who
+lll
+touch plik1.txt
+ls
+lll
+touch plik1.txt
+lll
+touch Plik1.txt
+lll
+touch Dane.info dane.info
+lll
+man touch
+cat /etc/passwd
+more /etc/passwd
+less /etc/passwd
+head /etc/passwd
+head -2 /etc/passwd
+tail -2 /etc/passwd
+
+
+head -2 /etc/passwd >> aaa.txt
+tail -2 /etc/passwd >> aaa.txt
+
+cat aaa.txt
+vi aaa.txt
+cat aaa.txt
+vi aaa.txt
+cat aaa.txt
+which emacs
+emacs
+emacs aaa.txt
+cat aaa.txt
+lll
+cp aaa.txt bbb.txt
+lll
+cat aaa.txt bbb.txt >> ccc.txt
+lll
+cat aaa.txt bbb.txt >> ccc.txt
+lll
+mkdir -p dane.info
+mkdir -p DANE.info
+lll
+ls -lah
+apropos mov
+apropos move
+man mv
+lll
+mv aaa.txt bbb.txt ccc.txt DANE.info/
+lll
+lll ./DANE.info/
+lll
+mv plik1.txt Plik1.txt  Dane.info  dane.info plik1.txt DANE.info/
+lll
+mv plik1.txt Plik1.txt  Dane.info  dane.info  DANE.info/
+lll
+rm plik1.txt~ aaa.txt~
+lll
+ls -lah
+cd DANE.info/
+lll
+lll
+history
+alias lll="ls -lahtr"
+#+END_SRC
+
+*** Lab 004 pipe, rev, sort, translate
+**** Virtual machines
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+ssh -o username@ferm.fizyka.umk.pl
+ssh -p 41015 root@labul4c.fizyka.umk.pl
+useradd -c "test testowy" -g users test
+passwd test
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no
+ssh -o username@ferm.fizyka.umk.pl
+ssh -p 41015 root@labul4c.fizyka.umk.pl
+
+groupadd student
+useradd -c "st1" -g student st1
+useradd -c "st2" -g student st2
+
+passwd st1
+passwd st2
+
+# usermod -g student
+#+END_SRC
+
+**** Processes
+
+#+BEGIN_SRC sh :eval no :tangle no
+ps -p $$
+
+ps aux
+# ps aux | tee -a listPS | grep init
+ps aux | wc -l
+ps aux | head -5
+ps aux | tail -5
+#+END_SRC
+
+*** TODO Lab 005 sharing files with safety precautions
+
+Bezpiecznie udostępnić dwa pliki w katalogu.
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+# ssh -o ServerAliveInterval=20 -o ServerAliveCountMax=1 username@ameryk.fizyka.umk.pl
+# ssh -p 41011 root@labul4c.fizyka.umk.pl
+
+useradd -g users user01
+
+groupadd student
+useradd -c "st1" -g student st1
+useradd -c "st2" -g student st2
+# usermod -g student st2
+
+passwd st1
+passwd st2
+
+# ssh -o ServerAliveInterval=20 -o ServerAliveCountMax=1 username@ameryk.fizyka.umk.pl
+# ssh -p 41011 root@labul4c.fizyka.umk.pl
+
+# ssh -o ServerAliveInterval=20 -o ServerAliveCountMax=1 username@ameryk.fizyka.umk.pl
+# ssh -p 41011 root@labul4c.fizyka.umk.pl
+
+
+-rw-rw----
+
+chmod 660 plik*
+chmod ug=rw plik1.txt
+chmod o=-r  plik1.txt
+chmod g+w   plik1.txt
+chmod o-r   plik1.txt
+
+chmod o-r   plik2.dat
+
+# drwxr-x--- 2 st2 student 4.0K Dec  6 14:57 .
+# drwx--x--- 3 st2 student 4.0K Dec  6 14:40 ..
+# -rw-rw---- 1 st2 student    6 Dec  6 14:39 dane1.txt
+# -rw-r----- 1 st2 student    6 Dec  6 14:40 dane2.dat
+# -rwxr-x--- 1 st2 student    8 Dec  6 14:57 program.sc
+
+# pwd # /home/st2/dla-student
+
+su # switch user
+su -
+su - st1
+su - st2
+
+ssh
+
+hostname
+
+
+
+program.sc
+
+
+ssh root@192.168.142.11
+ssh st1@192.168.142.11
+ssh st2@192.168.142.11
+ssh username@ameryk.fizyka.umk.pl
+ssh ferm
+
+
+ls -lah ~/.ssh
+cat ~/.ssh/known_hosts
+
+
+scp ./dane.txt test@192.168.142.12:
+
+scp ./dane.txt test@192.168.142.11:
+scp ./dane.txt test@192.168.142.11
+
+
+
+scp username@ameryk.fizyka.umk.pl:dane.txt ./dane6
+
+scp -P 41011 ./fruits st1@labul4c.fizyka.umk.pl:
+scp -rP 41011 ./.emacs.d/ st1@labul4c.fizyka.umk.pl:
+
+scp st1@192.168.142.11:dane st2@192.168.142.11:dane2
+
+
+wget
+
+file
+
+mv
+
+
+df -h
+du -hs
+
+grep
+
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+  [st1@centos7-11 dla-student]$ history
+    1  mkdir dla-student
+    2  cd dla-student
+    3  echo "dane1" >> dane.txt
+    4  echo "dane1" >> dane1.txt
+    5  echo "dane2" >> dane2.dat
+    6  ls -lah
+    7  rm dane.txt
+    8  ls -lah
+    9  pwd
+   10  cd /home/st1/
+   11  history
+   12  cd /home
+   13  ls -ah
+   14  ls -lah
+   15  cd st2/
+   16  ls -lah
+   17  cd st2
+   18  ls -lah
+   19  cd dla_student
+   20  ls -lah
+   21  ls /home/st2/dla_student
+   22  ls -lah /home/st2/dla_student
+   23  ls -lah /home/st2/
+   24  ls -lah /home/st2/dla_student
+   25  ls -lah /home/st2/dla-student
+   26  ls -lah /home/st2/
+   27  ls -lah /home/st2/dla-student
+   28  ls -lah
+   29  pwd
+   30  cd dla-student
+   31  ls -lah
+   32  pwd
+   33  ls -lah
+   34  cd ls -lah ..
+   35  ls -lah ..
+   36  touch test
+   37  ls -lah
+   38  ./program.sc
+   39  history
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+  [st2@centos7-11 dla-student]$ history
+    1  ls -lah
+    2  ls -lah /home/st1
+    3  ls -lah /home/st1/dla-student
+    4  cat /home/st1/dla-student/dane2.dat
+    5  ls -lah
+    6  mkdir dla-student
+    7  echo "dane1" >> dane1.txt
+    8  echo "dane2" >> dane2.dat
+    9  mv dane* ./dla-student/
+   10  cd ./dla-student/
+   11  ls -lah
+   12  pwd
+   13  chmod g+x .
+   14  ls -lah
+   15  chmod g+x ..
+   16  ls -lah
+   17  cd ls -lah
+   18  ls -lah
+   19  pwd
+   20  ls -lah
+   21  cd ..
+   22  ls -lah
+   23  chmod o-rx /home/st2/dla-student/
+   24  ls -lah
+   25  chmod g+w dla-student/dane1.txt
+   26  chmod o-r dla-student/dane*
+   27  echo OK
+   28  pwd
+   29  cd dla-student/
+   30  ls -lah
+   31  echo OK
+   32  echo "echo OK" > program.sc
+   33  cat program.sc
+   34  ls -lah
+   35  chmod o-r
+   36  chmod o-r program.sc
+   37  chmod u+x
+   38  chmod u+x ./program.sc
+   39  ls -lah
+   40  ./program.sc
+   41  chmod g+x ./program.sc
+   42  ls -lah
+   43  chmod g-r ./program.sc
+   44  chmod g+r ./program.sc
+   45  ls -lah
+   46  history
+
+   47  su - st1
+   48  su - st2
+   49  ssh st2@localhost
+   50  hostname
+   51*
+   52  ssh st2@centos7-11
+   53  ssh st2@centos7-12
+   54  history
+
+   54  history
+   55  ssh centos7-12
+   56  ssh centos7-11
+   57  hostname -i
+   58  history
+   59  alias h=history
+   60  h
+   61  alias lll=ls -lah
+   62  alias lll="ls -lah"
+   63  alias llll="ls -lahtr"
+   64  h
+#+END_EXAMPLE
+
+*** TODO Lab 006 Processes
+**** Zadanie z ostatnich ćwiczeń
+
+Users: =st1=, =st2=, (obaj w grupue =stud=), bezpiecznie udostępnić
+dwa pliki =plik1.txt= oraz =plik2.txt= z =/home/st2/dla_stud=
+użytkownikowi =st1= do odczytu i pisania. Zabrać wszelkie inne
+pozwolenia użytkownikom innym niż właściciel oraz członkowie grupy
+=stud=.
+
+Bezpiecznie
+- =st1= nie może listować zawartości =/home/st2=
+- =st1= nie może dodawać nowych plików w katalogu
+  =/home/st2/dla_stud=
+
+  Extras: rsync
+
+**** Processes
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+ps -ax | grep ssh
+ps aux
+
+pstree -A
+
+sleep 1100 &
+sleep 1200 &
+sleep 1300 &
+
+jobs
+fg %2
+bg %2
+kill %2
+kill -9 %1
+ps | grep sleep
+kill -SIGKILL $somePID
+
+killall
+
+top
+#htop
+#+END_SRC
+
+*** DOIN Lab 008 ~find~ and ~tar~
+**** tar
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+cd ~/public_html
+tar cvzf ./pack.tar.gz ./index.php test.html
+mkdir ./unpacked
+tar -tvf pack.tar.gz # list content of archive
+tar -xvf pack.tar.gz -C ./unpacked
+#+END_SRC
+
+**** Exercise 1
+
+tar --help | head
+dir -al
+dir --help
+dir */
+basename --help
+# + for loop
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt005.sh :shebang "#!/bin/bash" :comments no
+for dir in */
+do
+    base=$(basename "$dir")
+    echo $base
+done
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt006.sh :shebang "#!/bin/bash" :comments no
+for dir in */
+do
+    base=$(basename "$dir")
+    tar -czvf "${base}.tar.gz" "$dir"
+done
+#+END_SRC
+
+***** Alternative solution
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt007.sh :shebang "#!/bin/bash" :comments no
+find . -type d -maxdepth 1 -mindepth 1 -exec tar cvf {}.tar {}  \;
+#+END_SRC
+
+*** TODO Lab 010 Shell scripting (BASH)
+
+  - https://devmanual.gentoo.org/tools-reference/bash/index.html
+  - http://tldp.org/LDP/abs/html/index.html
+
+    #+BEGIN_SRC sh :eval no :tangle no
+
+git clone https://github.com/username/unix.git
+git pull
+
+    #+END_SRC
+
+**** Scripting intro
+
+GNU Emacs
+- echo "test"
+- find all hidden files in home directory
+
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt000.sh :shebang "#!/bin/bash" :comments no
+
+mkdir dir01 dir02 dir03
+head /etc/passwd > dir01/f01.txt
+tail /etc/passwd > dir02/f02.txt
+grep "^fu.*ing$" /usr/share/dict/words > dir03/f03.txt
+tar --help
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt001.sh :shebang "#!/bin/bash" :comments no
+
+for i in 1 2 3 4 5
+do
+    echo "Welcome $i times"
+done
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt002.sh :shebang "#!/bin/bash" :comments no
+
+for i in {1..5}
+do
+    echo "Welcome $i times"
+done
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt003.sh :shebang "#!/bin/bash" :comments no
+
+echo "Bash version ${BASH_VERSION}..."
+for i in {0..10..30}
+do
+    echo "Welcome $i times"
+done
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt004.sh :shebang "#!/bin/bash" :comments no
+
+for i in $( ls * ); do
+    echo item: $i
+done
+
+#+END_SRC
+
+**** Zmienne środowiskowe VS zmienne powłokowe
+***** Info
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+TEST_1="test pierwszy"
+echo $TEST_1
+
+export TEST_2="test drugi"
+export TEST_3="test trzeci"
+
+echo $TEST_2
+echo $TEST_3
+
+bash
+echo $TEST_1
+echo $TEST_2
+echo $TEST_3
+
+env
+
+export TEST_23=$TEST_2$TEST_3
+echo $TEST_23
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no
+echo $PATH
+#+END_SRC
+
+***** Exercise 1
+
+Na koncie studenckim (np. =ameryk=) stwórz katalog
+=~/bin/myscripts= i dodaj go do ścieżki tak żeby przeszukiwany był
+jako *pierwszy*.
+
+#+BEGIN_SRC sh :eval no :tangle no
+mkdir -p ~/bin/myscripts
+export PATH="/home/test/bin:$PATH"
+#+END_SRC
+
+***** Exercise 2
+
+Stwórz plik moja =ilu.sh=, które sprawdza ilu uzytkowników
+na maszynie (np. =ameryk=) korzysta domyślnie z powłoki =tcsh= oraz ilu
+jest wszystkich użytkowników.  Wynik powinien być wypisywany na
+ekran w formacie =liczba1/liczba2=.
+
+Dodatkowo: Za pomocą komendy =tee= wynik zapisać do pliku
+=ilu-YYYYMMDD-HHMMSS.txt= w bierzącym katalogu.
+
+****** Solution
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/ilu.sh :shebang "#!/bin/bash" :comments no
+echo $(date +"%Y%m%d-%H%M%S")
+echo $(grep '/bin/tcsh' /etc/passwd | wc -l )/$(cat /etc/passwd | wc -l ) | tee ilu-$(date +"%Y%m%d-%H%M%S")
+#+END_SRC
+
+***** Exercise 3: Gdzie jest Duch?
+
+Stwórz plik moja =gdzie-jest-duch.sh=, które sprawdza w jakich
+grupach na maszynie =ameryk= jest użytkownik =duch= i wypisuje
+tę informację na ekran.
+
+****** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+cat /etc/group | grep duch
+groups duch
+#+END_SRC
+
+***** Exercise 4: Silnia
+
+#+BEGIN_SRC sh
+
+if [[ $# -eq 0 || $1 == "-h" || $1 == "--help" ]];
+then
+    echo "$0 oblicza silnie podanej liczby."
+    echo "Uzycie: $0 [-h] liczba"
+    echo "Opcja -h wyswietla pomoc."
+    exit 1
+fi
+
+silnia=1;
+
+for (( i=2 ; i<=$1 ; i++ ))
+do
+    let silnia=silnia*i;
+done
+
+echo "Silnia $1 wynosi: $silnia"
+
+#+END_SRC
+
+#+RESULTS:
+
+**** Arguments
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/s001_id.sh :shebang "#!/bin/bash" :comments no
+
+echo "Nazwa skryptu: $0"
+echo "Podales $# argumentow"
+echo "Oto one: $*"
+echo "Argument 1 = $1"
+echo "Argument 2 = $2"
+
+#+END_SRC
+
+#+BEGIN_SRC sh
+
+echo " "
+echo $@
+echo " "
+echo $*
+
+#+END_SRC
+
+Źródło: http://www.is.umk.pl/~grochu/unix/materialy/unix.pdf
+
+#+BEGIN_SRC sh :eval yes :tangle no :comments no :results drawer
+
+bash ./tg/s001_id.sh pierwszy drugi trzeci czwarty
+
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+Nazwa skryptu=./tg/s001_id.sh
+Podales 4 argumentow
+Oto one: pierwszy drugi trzeci czwarty
+Argument 1 = pierwszy
+Argument 2 = drugi
+:END:
+
+**** Tablice
+
+- jednowymiarowe
+- nie muszą być deklarowane
+- indeksowane są liczbami całkowitymi pocz¡wszy od
+  - 0 (bash)
+  - 1 (zsh)
+- do elementów odwołujemy się za pomocą nawiasów kwadratowych
+  np.: ${zmienna[indeks]}
+
+  Źródło: http://www.is.umk.pl/~grochu/unix/materialy/unix.pdf
+
+  #+BEGIN_SRC sh :eval no :tangle no :comments no
+
+friut[0]=Mango
+friut[1]=Mango
+friut[2]=Lemon
+friut[3]=Kiwi
+friut[4]=Orange
+friut[5]=Peach
+friut[6]=Pear
+
+friut[8]=Avocado
+friut[9]=Cherry
+
+echo ${friut[6]}
+echo ${friut[7]}
+echo ${friut[8]}
+
+echo Wszystkie owoce: ${friut[*]}
+
+
+myDay=(Mon Tue Wed Thu Fri Sat Sun)
+
+echo ${myDay[3]}
+echo ${myDay[*]}
+
+echo my days per my week = ${#myDay[*]}
+
+echo ${#friut[*]}
+
+  #+END_SRC
+
+**** Operacje arytmetyczne
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+let suma=2+2
+echo $suma
+let suma+=3
+echo $suma
+suma+=3      #!!!
+echo $suma
+let suma++
+echo $suma
+echo "sqrt($suma+7)" | bc
+dc
+
+#+END_SRC
+
+**** Wyrażenia warunkowe
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+[ $SHELL == /bin/bash ] && echo Uzywasz powloki Bash
+[ $0 == bash ] && echo Uzywasz powloki Bash
+[ $0 == "/usr/bin/zsh" ] && echo Uzywasz powloki ZSH
+
+
+wynik=$(shuf -i 0-100 -n 1) && echo $wynik
+[ $wynik -lt 90 ] && echo "Za malo"
+
+test `cat /etc/passwd | wc -l` -gt 100 && echo Uzytkownikow jest wiecej niz 100
+test `cat /etc/passwd | wc -l` -lt 100 && echo Uzytkownikow jest mniej niz 100
+
+# eq ne lt gt le ge
+
+[ -e /etc/passwd ] && echo Plik /etc/passwd istnieje
+
+[ -d /etc/passwd ] && echo Plik /etc/passwd jest katalogiem
+[ -f /etc/passwd ] && echo Plik /etc/passwd nie jest katalogiem
+
+[[ $0 == bash && ! ( 2 -le 5  || a == a ) ]] && echo Warunek spełniony
+
+#+END_SRC
+
+https://www.gnu.org/software/bash/manual/html_node/Bash-Conditional-Expressions.html
+
+**** Wyrażenie sterujące =if=
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/s003_allArgs.sh :shebang "#!/bin/bash" :comments no
+
+if [ $# -eq 0 ];
+then
+    echo "Nie podano zadnych argumentow!!!"
+else
+    echo Podane argumenty: $*
+fi
+exit 0
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/s004_less_ls.sh :shebang "#!/bin/bash" :comments no
+
+if [ $# -lt 1 ];
+then
+    echo "Podaj plik lub katalog jako argument."
+    echo "Uzycie: $0 plik"
+    exit 1
+fi
+if [ -f $1 ];
+then
+    more $1
+else
+    if [ -d $1 ];
+    then
+        ls -lahtr $1
+    else
+        echo "Blad: $1 nie jest plikiem ani katalogiem"
+    fi
+fi
+
+#+END_SRC
+
+Źródło: http://www.is.umk.pl/~grochu/unix/materialy/unix.pdf
+
+**** Wyrażenie sterujące =For=
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/silnia.sh :comments no
+
+if [[ $# -eq 0 || $1 == "-h" || $1 == "--help" ]];
+then
+    echo "Uzycie: $0 [-h] liczba"
+    echo "Oblicza silnie podanej liczby."
+    echo "Opcja -h wyswietla pomoc."
+    exit 1
+fi
+silnia=1;
+
+
+for (( i=2 ; i<=$1 ; i++ ))
+do
+    let silnia=silnia*i;
+done
+
+echo "Silnia wynosi $silnia"
+
+#+END_SRC
+
+Źródło: http://www.is.umk.pl/~grochu/unix/materialy/unix.pdf
+
+**** Wyrażenie sterujące =While=
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+#+END_SRC
+
+**** Tablice (C.D.)
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+myDay=(Mon Tue Wed Thu Fri Sat Sun)
+myD4y=( $(
+            for el in "${myDay[@]}"
+            do
+                echo "$el"
+            done | tr "a" "4" | tr "e" "3" | tr "o" "0") )
+echo "${myD4y[*]}"
+
+#+END_SRC
+
+**** Tablice, ćwiczenia
+***** Zadanie 1
+****** Treść
+
+Napisać skrypt =bash= (=zad01.sh=), który wpisze do zmiennej
+=myArgs= (jako kolejne elementy tablicy) wszystkie argumenty
+skryptu a następnie wypisze elementy tablicy na =stdout=.
+
+****** Rozwiązanie
+
+Pierwsze:
+#+BEGIN_SRC sh :eval no :tangle ./tg/zad_001_myArgs_01.sh :shebang "#!/bin/bash" :comments no
+
+myArray=($@)
+echo ${myArray[*]}
+echo ${myArray[0]}
+
+#+END_SRC
+
+Drugie:
+#+BEGIN_SRC sh :eval no :tangle ./tg/zad_001_myArgs_02.sh :shebang "#!/bin/bash" :comments no
+
+myArray=($*)
+echo ${myArray[*]}
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+echo ${myArray[*]}
+
+#+END_SRC
+
+***** Zadanie 2
+****** Treść
+
+Z pliku =/usr/share/dict/words= wpisać do zmiennej =myWords=
+(jako kolejne elementy tablicy) słowa zaczynające się literami
+=de= i kończące się literami =st=
+
+****** Rozwiązanie
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+grep '^de.*st$' /usr/share/dict/words | while read slowo
+do
+    echo znalazlem $slowo
+done
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+myWords=(   $(grep '^de.*st$' /usr/share/dict/words)   )
+echo ${myWords[*]}
+echo " "
+echo ${myWords[0]}
+echo ${myWords[1]}
+
+#+END_SRC
+
+***** Zadanie 3
+****** Treść
+
+Słowa jak wyżej wypisać o nich informację w formacie
+
+#+BEGIN_EXAMPLE
+       There is 3 letters in word xyz.
+#+END_EXAMPLE
+
+Na 2 sposoby: raz standardowo (za pomocą poleceń znanych z
+poprzednich zajęć; a raz przez wpisanie słów do tablicy.
+
+****** Rozwiązanie
+
+pierwsze
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+grep '^de.*st$' /usr/share/dict/words | while read slowo
+do
+    echo  there is $(echo -ne $slowo | wc -m) characters in the word $slowo
+done
+
+#+END_SRC
+
+drugie
+#+BEGIN_SRC sh :eval no :tangle no :comments no
+
+myWords=($(grep '^de.*st$' /usr/share/dict/words  | tr "\n" " "))
+echo ${myWords[*]}
+echo ${myWords[1]}
+
+for ii in "${myWords[@]}"
+do
+    echo test $ii
+done
+
+END=${#myWords[*]}
+
+for ((i=1;i<=END;i++)); do
+    echo $i
+done
+
+
+
+
+for ii in $(seq 0 $(echo $END-1 | bc) ); do
+    # echo $ii
+    echo there is ${#myWords[$ii]} letters in the word ${myWords[$ii]}
+done
+
+
+for ((ii=0;ii<=END-1;ii++)); do
+    # echo $ii
+    echo there is ${#myWords[$ii]} letters in the word ${myWords[$ii]}
+done
+
+#+END_SRC
+
+***** Zadanie 4
+****** Treść
+
+Jak wyżej (za pomocą tablicy), ale podać początek słowa jako
+pierwszy argument a koniec słowa jako drugi argument a
+informację o ilości liter w danym słowie podawać w kolejności
+anty-alfabetycznej znalezionych słów
+
+****** Rozwiązanie
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/zad998_WORDS.sh :shebang "#!/bin/bash" :comments no
+
+myWords=($(grep '^'$1'.*'$2'$' /usr/share/dict/words  | tr "\n" " "))
+echo ${myWords[*]}
+echo " "
+echo ${myWords[1]}
+echo " "
+myWORDS=( $(
+              for el in "${myWords[@]}"
+              do
+                  echo "$el"
+              done | sort -r ) )
+echo "${myWORDS[*]}"
+echo " "
+echo "${myWORDS[1]}"
+echo " "
+
+
+
+for ((ii=0;ii<=END-1;ii++)); do
+    echo $ii
+    echo there is ${#myWords[$ii]} letters in the word \"${myWords[$ii]}\"
+done
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/zad999_WORDS.sh :shebang "#!/bin/bash" :comments no
+
+myWords=($(grep '^'$1'.*'$2'$' /usr/share/dict/words))
+# echo ${myWords[*]}
+# echo " "
+# echo ${myWords[1]}
+
+END=${#myWords[*]}
+
+# echo $END
+
+for ((ii=END-1;ii>=0;ii--)); do
+    echo $ii
+    echo there is ${#myWords[$ii]} letters in the word \"${myWords[$ii]}\"
+done
+
+#+END_SRC
+
+***** Zadanie 5
+****** Treść
+
+Jak wyżej, ale podając jeden argument będący całym wyrażeniem
+regularnym. Słowa wypisać w losowej kolejności. Na końcu wypisać
+ilość wszystkich słów i sumę wszystkich znaków we wszystkich
+słowach (łącznie).
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/zad000_WORDS.sh :shebang "#!/bin/bash" :comments no
+
+myWords=($(grep $1 /usr/share/dict/words))
+# echo ${myWords[*]}
+# echo " "
+# echo ${myWords[1]}
+
+END=${#myWords[*]}
+
+# echo $END
+
+for ((ii=END-1;ii>=0;ii--)); do
+    echo $ii
+    echo there is ${#myWords[$ii]} letters in the word \"${myWords[$ii]}\"
+done
+
+#+END_SRC
+
+** New
+*** 2017-11-29
+**** Recapitulation
+***** DONE Exercise 0.2
+
+Check disk *usage* of your home directory (display relevant
+information in /human readable format/)
+
+****** Hint
+
+#+BEGIN_SRC sh
+
+apropos usage
+
+#+END_SRC
+
+****** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+du -sh ~
+
+#+END_SRC
+
+***** DONE Exercise 0.3
+
+Count number of hidden files in your home directory (excluding
+sub-directories).
+
+****** Hint
+
+Podpowiedź:
+- polecenie =find=
+- pipe =|=
+- polecenie =wc=
+
+****** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+find  -maxdepth 1 -type f -iname ".*" | wc -l
+
+#+END_SRC
+
+***** DONE Exercise 0.4
+
+Explain "mechanics" of the following command:
+
+#+BEGIN_SRC sh
+
+grep "/bin/bash" /etc/passwd
+
+grep "/bin/bash" /etc/passwd | cut -d ':' -f1,6
+
+#+END_SRC
+
+***** DONE Exercise 0.5
+
+Displays the 3 newest files in the home directory (without
+sub-directories).
+
+****** Hint
+
+- command =find=
+- use option =-printf=
+
+****** Solution
+
+#+BEGIN_SRC sh
+
+find ~ -maxdepth 1 -type f -printf "%T+\t%p\n" | sort -r | head -n 3
+
+#+END_SRC
+
+***** DONE Exercise 0.5
+
+Displays the 3 oldest files in the home directory (without sub-directories).
+
+****** Solution
+
+#+BEGIN_SRC sh
+
+find ~ -maxdepth 1  -printf "%T+\t%p\n" | sort | head -n 3
+
+#+END_SRC
+
+**** Reading
+
+#+BEGIN_SRC sh
+
+man grep
+man 7 regex
+
+#+END_SRC
+
+**** Regular expressions
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+cat /etc/passwd | grep 'root'
+grep 'root' /etc/passwd
+grep '^root' /etc/passwd
+grep '^roo' /etc/passwd
+grep 't$' /etc/passwd
+
+grep "^a..t$" /usr/share/dict/words
+grep "^fu.*ing$" /usr/share/dict/words
+grep "\(^root$\)\|\(^test$\)" /usr/share/dict/words
+
+grep –l "script" /etc/mime*
+grep '^r.\{2\}t' /etc/passwd
+grep '^ro\{1,4\}t' /usr/share/dict/words
+grep '^[2-5]' /etc/passwd
+grep '^[0-9][a-zA-Z]' /usr/share/dict/words
+grep '^[2-5].*sh$' /usr/share/dict/words
+
+# find
+find . -regex '\./.*pp.*'
+
+head /etc/passwd
+more /etc/hosts
+less /etc/hosts
+
+#+END_SRC
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+grep "[list]" /usr/share/dict/words
+grep "[ae][fw]" /usr/share/dict/words
+grep "^[Cc][aA][Pp][Ss]" /usr/share/dict/words
+grep "in[^g]$" /usr/share/dict/words
+grep "^.in[^g]$" /usr/share/dict/words
+# \w jest równoważne [0-9a-zA-Z] lub [[:alnum:]]
+grep "[0-9a-zA-Z]" /usr/share/dict/words
+grep "^t[[:alnum:]]t$" /usr/share/dict/words
+# \W oznacza to samo co $[^[[:alnum:]]]
+# ? poprzedzający element pasuje zero lub jeden raz, np. =miark?a= pasuje do =miarka= ale też =miara=
+# * poprzedzaj¡cy element pasuje zero lub wi¦cej razy, np =W*in= pasuje zarówno do saowa =Windows= jak i do =Linux=
+# + poprzedzaj¡cy element pasuje jeden lub wi¦cej razy,
+# {n} poprzedzaj¡cy element pasuje dokaadnie n razy
+# () grupowanie, np. fizy(ka|cy) pasuje zarówno do fizyka i fizycy.
+grep "^informati\(cs\|o\)" /usr/share/dict/words
+
+#+END_SRC
+
+**** Make directory named using date
+
+#+BEGIN_SRC sh
+
+echo  "unix_$(date +"%Y%m%d-%H%M%S")"
+mkdir "unix_$(date +"%Y%m%d-%H%M%S")"
+cd !$
+cp -v /usr/share/dict/words .
+
+#+END_SRC
+
+**** Sort
+
+#+BEGIN_SRC sh
+
+grep "^d.....$" /usr/share/dict/words > d_words.txt
+
+#+END_SRC
+
+**** Sort RTL
+
+Sort RTL...
+
+***** Hint
+
+- polecenia: =sort= oraz =rev=
+
+***** Solution
+
+#+BEGIN_SRC sh
+
+grep "^d.....$" /usr/share/dict/words > d_words.txt
+rev d_words.txt | sort | rev > r_words.txt
+
+# cat extract_a___.txt | rev | sort | rev
+#+END_SRC
+
+**** Exercise 5
+
+Na podstawie pliku =/etc/passwd= stwórz listę wszystkich
+użytkowników (imiona i nazwiska, =comment=).
+
+***** Hint
+
+- polecenie: =cut=
+
+***** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+cut -f 5 -d : /etc/passwd
+
+#+END_SRC
+
+**** Sort log-ins  from ~/etc/passwd~
+
+#+BEGIN_SRC sh
+
+cut -d ':' -f 1 /etc/passwd
+
+#+END_SRC
+
+**** Exercise 5b (optional)
+
+Opcjonalnie: posortuj ww. wg nazwiska
+
+***** Solution 2 (extra sorting)
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+cut -f 5 -d ':' /etc/passwd | tr ":" " " | awk '{print $NF,$0}' | sort | cut -f2- -d ' '
+
+#+END_SRC
+
+**** Exercise 6
+
+Z pliku =/usr/share/dict/words= wybrać słowa
+  - o długości od 4 do 6 znaków
+  - zaczynające się na tą samą literę, na którą zaczyna się
+    Pana/Pani nazwisko
+  - kończące się na tą samą literę na którą kończy się Pani/Pana
+    nazwisko
+    (z dokładnością do kodowania ASCII, tzn. bez polskich znaków),
+    wybrane słowa zapisać do pliku =lista-4-6.txt=.
+
+    W pliku =lista-5-8.mod= zapisać te słowa ale z zamienionymi
+    wszystkimi literami =o= na =0=, =e= na =3= oraz zapisane wspak.
+
+***** Hints
+
+Polecenia dawno nie używane na zajęciach:
+- =grep=, similar regexp:
+  - =grep "^n...n$" /usr/share/dict/words=
+  - =grep '^ro\{1,5\}t' /usr/share/dict/words=
+- =tr=
+- =rev=
+
+***** Solution A
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+grep '^r.\{2,4\}t$' /usr/share/dict/words
+
+grep '^r.\{2,4\}t$' /usr/share/dict/words > lista-5-8.txt
+
+#+END_SRC
+
+***** Solution B
+
+#+BEGIN_SRC sh
+
+grep '^r.\{3,6\}t$' /usr/share/dict/words | tr 'e' '3' | tr 'o' '0' | rev > lista-5-8.mod
+
+
+#+END_SRC
+
+**** Exercise 7
+
+Stworzyć pliki o nazwach z uprzednio wygenerowanej listy (trzeba
+doczytać =man xargs=.  Każdy z plików przeniesć do katalogu o
+nazwie takiej jak nazwa pliku (należy stworzyć katalogi).
+
+***** Hint
+
+#+BEGIN_SRC sh :eval no :tangle no
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo mv -v "$1 ~/' _ {} \;
+#+END_SRC
+
+***** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+cat lista-4-6.txt | xargs touch --
+
+grep '^r.\{3,6\}t$' /usr/share/dict/words | tr 'e' '3' | tr 'o' '0' | rev | xargs touch --
+
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo mkdir -pv $1_tmp' _ {} \;
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo mkdir -pv $1_tmp ; echo mv -v $1 $1_tmp ; echo mv -v $1_tmp $1 ' _ {} \;
+#+END_SRC
+
+**** Tee
+
+#+BEGIN_SRC sh
+
+grep "^a...$" /usr/share/dict/words | tee extract_a___.txt | wc -l
+
+#+END_SRC
+
+**** Tee extras
+
+Explain the behavior of the following command.
+
+#+BEGIN_SRC sh
+
+echo "test" | tee >(grep test)
+
+#+END_SRC
+
+*** 2018-01-03
+**** Exercise 01 (=mkdir=)
+***** Task
+
+In your home directory make a directory named:
+- ~unix---<today's date>---001~
+  where ~<today's date>~ part is automatically generated and is
+  formatted =yyyy-mm-dd=.
+
+***** Hint
+
+#+BEGIN_SRC sh
+
+man date
+man mkdir
+
+echo test---$(date +"%Y-%m-%d--%H:%M:%S")
+
+
+
+#+END_SRC
+
+***** Solution
+
+#+BEGIN_SRC sh
+
+echo unix---$(date +"%Y-%m-%d")---001
+
+mkdir ~/unix---$(date +"%Y-%m-%d")---001
+
+mkdir $HOME/unix---$(date +"%Y-%m-%d")---001
+
+cd
+mkdir unix---$(date +"%Y-%m-%d")---001
+
+#+END_SRC
+
+**** Exercise 02 (=mkdir=, =seq=, =printf=, ETC)
+***** Task
+
+In the directory ~~/unix---2018-01-03---001/~ using a single call
+to =mkdir= command make sub-directories
+- ~ex.03~,
+- ~ex.04~,
+- ~ex.05~,
+- ~ex.06~,
+- ~ex.07~ and
+- ~ex.08~.
+
+***** Hint
+
+#+BEGIN_SRC sh
+
+echo {3..8} # :/
+
+mkdir a10 b20 c30
+printf "abc.%02i " 24 25 48 50
+seq 3 8
+
+man mkdir
+man printf
+man seq
+
+# rmdir -v ./*
+
+#+END_SRC
+
+***** Solution 1 (quite dummy)
+
+#+BEGIN_SRC sh
+
+cd $HOME/unix---2018-01-03---001/
+
+mkdir -v {ex.03,ex.04,ex.05,ex.06,ex.07,ex.08}
+
+mkdir -v  ex.03 ex.04 ex.05 ex.06 ex.07 ex.08
+
+#+END_SRC
+
+***** Solution 2 (better, but still...)
+
+#+BEGIN_SRC sh
+
+mkdir ex.0{3..8}
+
+#+END_SRC
+
+***** Solution 3 (nice)
+
+#+BEGIN_SRC sh
+
+mkdir $(printf "ex.%02i " $(seq 3 8))
+
+#+END_SRC
+
+**** Exercise 03 (=grep=. =regex=)
+***** Task
+
+In the sub-directory ~ex.03~ prepare bash script that is named
+~some-words.sh~ that produces file ~some-words.info~ and contains
+all words from the ~/usr/share/dict/words~ file that match the
+following criteria:
+- words *begin* with one of the letters: =a=, =b=, =c=, =d=, =e=, =f= or =g=;
+- words *terminate* with the string =ing=;
+- words have *total length* of 7 to 28 characters.
+
+***** Hint
+
+Regular expressions:
+- beginning of line =^=
+- end of line =$=
+- group of characters between =[= and =]=
+- repeat the previous pattern 3 to 5 times =\{3,5\}=
+
+  Output handling:
+  - write  to file =>=
+  - append to file =>>=
+
+    #+BEGIN_SRC sh
+
+man grep
+man regex
+
+# words starting with "a"
+grep "^a" /usr/share/dict/words
+# words ending with "z"
+grep "z$" /usr/share/dict/words
+# words containig "fro", "gro" or "hro"
+grep "[fgh]ro" /usr/share/dict/words
+# words containing "oo", "ooo" or "oooo"
+grep "o\{2,4\}" /usr/share/dict/words
+
+    #+END_SRC
+
+***** Solution
+
+Script should contain the following line (please remember to set
+adequate file permissions).
+
+#+BEGIN_SRC sh
+
+grep '^[a-g].\{3,24\}ing$' /usr/share/dict/words > some-words.info
+
+#+END_SRC
+
+**** Exercise 04 (=grep=. =regex=, =awk=)
+***** Task
+
+In the sub-directory ~ex.04~ prepare bash script that is named
+~some-words-stats.sh~ that produces file ~some-words-stats.info~ and
+contains the following information on the content of the
+~../ex.03/some-words.info~ file
+
+In the consequent lines please provide:
+- [X] number of lines of lines,
+- [X] number of lines containing words with ~-~ (dash) character,
+- [X] length of the longest word (hint: =wc --help=) and
+- [ ] length of the shortest word (hint: use =awk= or =sed=).
+
+***** Hint
+
+#+BEGIN_SRC sh
+
+man grep
+man regex
+man awk
+
+#+END_SRC
+
+***** Solution
+
+Script should contain the following line (please remember to set
+adequate file permissions).
+
+
+#+BEGIN_SRC sh
+
+cat ../ex.03/some-words.info | wc -l > some-words-stats.info
+
+grep "-" ../ex.03/some-words.info | wc -l >> some-words-stats.info
+
+cat ../ex.03/some-words.info | wc -L >> some-words-stats.info
+
+awk '{print length}' ../ex.03/some-words.info | sort -n | uniq | head -n 1 >> some-words-stats.info
+
+#+END_SRC
+
+**** Exercise 05 (=cp=. =md5sum=)
+***** Task
+
+Change directory to ~ex.05~.
+
+Copy the file ~../ex.03/some-words.info~ as
+- ~some-words-00.info~,
+- ~some-words-01.info~,
+- ~some-words-02.info~.
+
+  Prepare bash script that is named ~some-words-sum.sh~ that
+  produces file ~some-words-sums.info~ and contains the =md5sum= of the
+  ~some-words-??.info~ files.
+
+  Next prepare bash script that is named ~some-words-sum-chk.sh~
+  that checks the above sums.
+
+  Alter content of the ~some-words-01.info~ file and check the
+  result of the ~some-words-sum-chk.sh~ script execution.
+
+***** Hint
+
+#+BEGIN_SRC sh
+
+man cp
+man md5sum
+
+#+END_SRC
+
+***** Solution
+
+Script(s) should contain the following line (please remember to set
+adequate file permissions).
+
+#+BEGIN_SRC sh
+
+cp ../ex.03/some-words.info some-words-00.info
+cp ../ex.03/some-words.info some-words-02.info
+cp ../ex.03/some-words.info some-words-01.info
+
+md5sum ./* > some-words-sums
+md5sum -c some-words-sums
+
+#+END_SRC
+
+**** Exercise 06 (=ln=)
+***** Task
+
+Change directory to ~ex.06~.
+
+Make symbolic links to files:
+- ~../ex.05/some-words-00.info~,
+- ~../ex.05/some-words-01.info~,
+- ~../ex.05/some-words-02.info~.
+
+***** Hint 1
+
+#+BEGIN_SRC sh
+
+man ln
+
+#+END_SRC
+
+***** Solution
+
+Script(s) should contain the following line (please remember to set
+adequate file permissions).
+
+#+BEGIN_SRC sh
+
+
+#+END_SRC
+
+**** Exercise NN
+
+- [X] script
+- [X] regular expressions
+- [X] longest/shortest line
+- [X] scripts - permission to execute
+- [X] other permissions
+- [X] copy
+- [X] symbolic links
+- [X] control sums
+- [X] DU / DF
+- [X] safe/secure sharing of directory
+- [X] scp
+- [X] tar
+- [X] email with attachment from command-line
+
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+tar cvzf ./pack.tar.gz ~/unix-kolos01
+
+echo -e "Dzień dobry,\nzałącznik..." | mutt -a "pack.tar.gz" -s "unix kolokwium $(whoami)" -- username@gmail.com
+
+#+END_SRC
+
+*** 2018.01.10
+
+- [ ] scp
+  #+BEGIN_SRC sh
+
+scp username@ameryk.fizyka.umk.pl:/home/291605/grupa/some_words ~/unix---2018-01-10---001/
+scp  ~/unix---2018-01-10---001/sha1sum.txt.asc username@ameryk.fizyka.umk.pl:/home/291605/grupa/
+
+  #+END_SRC
+
+
+* Exercises
+*** Exercise 0.0
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+ssh -o username@ferm.fizyka.umk.pl
+ssh -p 41015 root@labul4c.fizyka.umk.pl
+
+groupadd student
+useradd -c "st1" -g student st1
+useradd -c "st2" -g student st2
+
+passwd st1
+passwd st2
+
+# usermod -g student
+
+#+END_SRC
+
+Zalogować się jako =st1= na maszynie wirtualnej.
+
+#+BEGIN_SRC sh :eval no :tangle no
+cal 29 2 2016 > cal.info
+#+END_SRC
+
+Skopiować plik =cal.info= do swojego (studenckiego) katalogu domowego.
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+scp cal.info username@ferm.fizyka.umk.pl:cal.info
+#+END_SRC
+
+Ew.
+
+#+BEGIN_SRC sh :eval no :tangle no
+scp cal.info username@ferm.fizyka.umk.pl:/home/username/
+#+END_SRC
+
+*** Exercise 0.1
+
+Za pomocą polecenie =echo= korzystając ze zmiennych systemowych wypisać:
+
+*username* is using *GNU/Linux* and his home directory is: */home/username*
+
+gdzie wytłuszczoną czcionką i symbolem * zaznaczono fragmenty
+tekstu generowane za pomocą poleceń lub na podstawie zmiennych
+środowiskowych.
+
+Stworzyć skrypt =bash= (=#!/bin/bash=) wykonujący ww.
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+echo "$(whoami) is using $(uname -o) and his home directory is: $HOME "
+#+END_SRC
+
+*** DONE Exercise 0.2
+CLOSED: [2017-11-29 Wed 07:10]
+
+Sprawdzić ile pojemności na dysku zuzywa Pani/Pana katalog domowy.
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+du -sh ~
+#+END_SRC
+
+*** DONE Exercise 0.3
+CLOSED: [2017-11-29 Wed 07:12]
+
+Policzyć ile plików ukrytych zawiera Pani/Pana katakog domowy (bez podkatalogów)
+
+**** Hint
+
+Podpowiedź:
+- polecenie =find=
+- polecenie =wc=
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+find  -maxdepth 1 -iname ".*" | wc -l
+#+END_SRC
+
+*** Exercise 0.4
+
+Policzyć ile uruchomionych procesów ma użytkownik =root=
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+
+#+END_SRC
+
+*** Exercise 1
+
+W katalogu =kolokwium00= stworzyć katalog =friuts=. Pozostając w
+katalogu =kolokwium00=, za pomocą *pojedynczego polecenia* w katalogu
+=friuts= stworzyć pliki:
+- Melon
+- Mango
+- Lemon
+- Kiwi
+- Orange
+- Apple
+- Avocado
+- Banana
+- Cherry
+- Grape
+- Pear
+- Peach
+
+**** Hint
+
+Podpowiedź:
+- polecenie =mkdir=
+- polecenie =touch=
+- wąsate nawiasy {,} podobnie jak przy tworzeniu wielu
+  podkatalogów za pomocą polecenia =mkdir=
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+mkdir -p kolokwium00/friuts
+cd kolokwium00
+touch ./friuts/{Melon,Mango,Lemon,Kiwi,Orange,Apple,Avocado,Banana,Cherry,Grape,Pear,Peach}
+#+END_SRC
+
+*** Exercise 2
+
+Zmienić katalog bierzący na uprzednio stworzony =friuts=.
+
+Za pomocą polecenia =find= wyszukać pliki, których nazwy zaczynają
+sę od litery =A=.
+
+Za pomocą polecenia =find= wyszukać pliki, których nazwy kończą
+się na literę =e=.
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+find -name "A*"
+find -name "*e"
+#+END_SRC
+
+*** find and exec
+
+Np. supFunSim.org
+
+#+BEGIN_SRC sh :eval no :tangle no
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo $1' _ {} \;
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo ${1#./}' _ {} \;
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo ${1%????} ' _ {} \;
+find . -maxdepth 1 -mindepth 1 -type f -exec bash -c 'echo ${1#./} is a friut' _ {} \;
+#+END_SRC
+
+*** Exercise 3
+
+Do każdego z plików w katalogu friuts wpisać jako jego nową zawartość jego własną nazwę.
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle no
+find . -type f -exec bash -c 'echo ${1#./} > $1' _ {} \;
+#+END_SRC
+
+*** Exercise 4
+
+Połączyć zawartość wszystkich plików i zapisać do pliku =friuts.txt=
+
+#+BEGIN_SRC sh :eval no :tangle no
+cat * > friuts.txt
+#+END_SRC
+
+*** Exercise 8
+
+Spakować każdy podkatalog katalogu bierzącego do osobnej paczki
+=*.tar.gz=.
+
+**** Hint 1
+
+tar --help | head
+dir -al
+dir --help
+basename --help
+man for
+
+**** Hint 2
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt005.sh :shebang "#!/bin/bash" :comments no
+
+for dir in */
+do
+    base=$(basename "$dir")
+    echo $base
+done
+
+#+END_SRC
+
+**** Solution
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt006.sh :shebang "#!/bin/bash" :comments no
+
+for dir in */
+do
+    base=$(basename "$dir")
+    tar -czvf "${base}.tar.gz" "$dir"
+done
+
+#+END_SRC
+
+**** Alternative solution
+
+#+BEGIN_SRC sh :eval no :tangle ./tg/skrypt007.sh :shebang "#!/bin/bash" :comments no
+
+find . -type d -maxdepth 1 -mindepth 1 -exec tar.gz -cvf {}.tar {}  \;
+
+#+END_SRC
+
+*** Bezpiecznie udostępnić pliki
+
+Users: =st1=, =st2=, (obaj w grupue =stud=), bezpiecznie udostępnić
+dwa pliki =plik1.txt= oraz =plik2.txt= z =/home/st2/dla_stud=
+użytkownikowi =st1= do odczytu i pisania. Zabrać wszelkie inne
+pozwolenia użytkownikom innym niż właściciel oraz członkowie grupy
+=stud=.
+
+Bezpiecznie
+  - =st1= nie może listować zawartości =/home/st2=
+  - =st1= nie może dodawać nowych plików w katalogu
+    =/home/st2/dla_stud=
+
+    Extras: rsync
+
+**** Solution
+
+See above: [[*Lab%20005%20sharing%20files%20with%20safety%20precautions][Lab 005 sharing files with safety precautions]].
+*** Extras
+* Other stuff worth learning
+
+- GNU Emacs
+  - https://www.gnu.org/software/emacs/
+  - $e^{i\times{}\pi}-1 = 0$
+  - [[./img/Tux.svg.png]]
+- =org-mode= (GNU Emacs)
+- ~gpg~ (GNU Privacy Guard, complete and free implementation of the OpenPGP standard)
+  - http://blog.ghostinthemachines.com/2015/03/01/how-to-use-gpg-command-line/
+  - http://www.thegeekstuff.com/2013/02/gpg-encrypt-decrypt/
+- Git
+  - https://git-scm.com/
+  - https://github.com/
+- ~diff~
+- ~diff3~
+
+#+begin_src sh :eval query :tangle no
+git annotate report.txt | cut -f 1 | uniq | wc -l
+#+end_src
