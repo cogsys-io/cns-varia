@@ -36,3 +36,5 @@ eval $(ssh-agent -s)
 ssh-add "${HOME}/.ssh/id_rsa"
 
 # datalad install git@gin.g-node.org:/EbenMoss/c1244_cns_mri_dicoms_defaced.git
+# cd c1244_cns_mri_dicoms_defaced
+# datalad get ...
