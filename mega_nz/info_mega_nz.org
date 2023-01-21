@@ -7,4 +7,10 @@ dpkg -x megacmd-xUbuntu_20.04_amd64.deb megacmd
 PATH="$PATH:$(pwd)/megacmd/usr/bin/"
 
 ./megacmd/usr/bin/mega-get "https://mega.nz/file/..."
+
+# however on some systems we get error while loading shared libraries: libcares.so.2
+# cd ${HOME}/cc/dev/c2022a/c1244_cns_TESTING_level2_data_download/c-ares-1.18.1
+# ./configure --disable-shared
+# TODO
+
 #+end_src

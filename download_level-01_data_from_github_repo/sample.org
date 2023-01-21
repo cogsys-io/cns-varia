@@ -1,0 +1,7 @@
+#+title: Sample
+
+#+begin_src sh :eval query :tangle no
+git clone https://github.com/cogsys-io/feat-01a.git
+tar -xzf feat-01a/input_001.tar.gz
+
+#+end_src
