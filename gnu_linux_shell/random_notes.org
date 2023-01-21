@@ -1,7 +1,9 @@
 #+title: Random_notes
 
 * Lab 001
-** Good sources
+** Good sources (if not taken down)
+- https://www.youtube.com/playlist?list=PLvgasosJnUVnnFifxecbyEno7jnqrl8fQ
+- https://fsl.fmrib.ox.ac.uk/fslcourse/lectures/scripting/
 - http://www.fizyka.umk.pl/~grochu/unix/materialy/unix.pdf
 - http://www.fizyka.umk.pl/~norbert/unix/u.pdf
 - http://www.fizyka.umk.pl/~jkob/so.pdf
