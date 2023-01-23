@@ -1,0 +1,12 @@
+#+title: For_public_repos
+
+- https://handbook.datalad.org/en/latest/basics/101-139-gin.html#access
+- https://handbook.datalad.org/en/latest/basics/101-139-gin.html
+
+#+begin_src sh :eval query :tangle no
+datalad install https://gin.g-node.org/EbenMoss/c1244_cns_mri_dicoms_defaced
+
+cd c1244_cns_mri_dicoms_defaced/
+datalad get bids_defaced/sub-cns000/ses-s01st/anat/sub-cns000_ses-s01st_acq-*
+bids_defaced/sub-cns000/ses-s01st/anat/sub-cns000_ses-s01st_acq-*
+#+end_src
